@@ -44,22 +44,23 @@ BEGIN
 				win_money_1 := to_unsigned(35, 5)*value1;
 				
 			else
-		--		win_money_1 := not value1;
+				win_money_1 := to_unsigned(0, win_money_1'length)-value1;
 			
 			end if;
 			
 			if bet2_wins = '1' then
 				win_money_2 := value2;
 			else
-		--		win_money_2 := not value2;
-				
+				win_money_2 := to_unsigned(0, win_money_2'length)-value2;
+
 			end if;
 			
 			if bet3_wins = '1' then
 				win_money_3 := to_unsigned(2, 2)*value2;
 				
 			else 
-		--		win_money_3 := not value3;
+				win_money_3 := to_unsigned(0, win_money_3'length)-value3;
+
 			end if;
 		new_money <= money + win_money_1+win_money_2+win_money_3;
   
