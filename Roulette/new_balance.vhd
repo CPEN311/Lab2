@@ -28,6 +28,41 @@ END new_balance;
 
 
 ARCHITECTURE behavioural OF new_balance IS
+	-- signal win_money_1 = unsigned(9 downto 0);
+	-- signal win_money_2 = unsigned(9 downto 0);
+	-- signal win_money_3 = unsigned(9 downto 0);
 BEGIN
-  -- Your code goes here
+	process(value1, value2, value3, bet1_wins, bet2_wins, bet3_wins)
+
+		variable	win_money_1 : unsigned(7 downto 0);
+		variable win_money_2 : unsigned(2 downto 0);
+		variable win_money_3 : unsigned(4 downto 0);
+		variable thirtyfive : integer := 35;
+		begin 
+	
+			if bet1_wins = '1' then
+				win_money_1 := to_unsigned(35, 5)*value1;
+				
+			else
+		--		win_money_1 := not value1;
+			
+			end if;
+			
+			if bet2_wins = '1' then
+				win_money_2 := value2;
+			else
+		--		win_money_2 := not value2;
+				
+			end if;
+			
+			if bet3_wins = '1' then
+				win_money_3 := to_unsigned(2, 2)*value2;
+				
+			else 
+		--		win_money_3 := not value3;
+			end if;
+		new_money <= money + win_money_1+win_money_2+win_money_3;
+  
+  end process;
+  
 END;
