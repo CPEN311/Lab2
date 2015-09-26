@@ -1,0 +1,56 @@
+C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/new_balance_tb.vhd {1 {vcom -work work -2002 -explicit C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/new_balance_tb.vhd
+Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity new_balance_tb
+-- Compiling architecture behavioural of new_balance_tb
+
+} {} {}} C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/roulette.vhd {0 {vcom -work work -2002 -explicit C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/roulette.vhd
+Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity roulette
+-- Compiling architecture structural of roulette
+** Error: C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/roulette.vhd(39): near "END": expecting BEGIN
+
+} {9.0 10.0} {}} C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/win_tb.vhd {1 {vcom -work work -2002 -explicit C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/win_tb.vhd
+Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity win_tb
+-- Compiling architecture behavioural of win_tb
+
+} {} {}} C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/new_balance.vhd {1 {vcom -work work -2002 -explicit C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/new_balance.vhd
+Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity new_balance
+-- Compiling architecture behavioural of new_balance
+
+} {} {}} C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/digit7seg.vhd {1 {vcom -work work -2002 -explicit C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/digit7seg.vhd
+Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity digit7seg
+-- Compiling architecture behavioral of digit7seg
+
+} {} {}} C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/spinwheel.vhd {1 {vcom -work work -2002 -explicit C:/Users/Joshua/Documents/cpen311/Lab2/Roulette/spinwheel.vhd
+Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity spinwheel
+-- Compiling architecture behavioral of spinwheel
+
+} {} {}}
