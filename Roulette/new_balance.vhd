@@ -47,20 +47,25 @@ BEGIN
 			if bet1_wins = '1' then
 			  balance := balance + 35*to_integer(value1);				
 			else
+
 			  balance := balance - to_integer(value1);
+
 			
 			end if;
 			
 			if bet2_wins = '1' then
 				balance := balance + to_integer(value2);
 			else
+
 			  balance := balance - to_integer(value2);				
+
 			end if;
 			
 			if bet3_wins = '1' then
 				balance := balance + 2*to_integer(value3);				
 			else 
 			  balance := balance - to_integer(value3);
+
 			end if;
 			
     new_money <= to_unsigned(balance,12);
