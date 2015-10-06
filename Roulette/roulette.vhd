@@ -57,10 +57,26 @@ ARCHITECTURE structural OF roulette IS
 		spin_result  : OUT UNSIGNED(5 downto 0));  -- current value of the wheel
   end component;
   
-  
-  
+  component new_balance
+	  port(money : in unsigned(11 downto 0);  -- Current balance before this spin
+       value1 : in unsigned(2 downto 0);  -- Value of bet 1
+       value2 : in unsigned(2 downto 0);  -- Value of bet 2
+       value3 : in unsigned(2 downto 0);  -- Value of bet 3
+       bet1_wins : in std_logic;  -- True if bet 1 is a winner
+       bet2_wins : in std_logic;  -- True if bet 2 is a winner
+       bet3_wins : in std_logic;  -- True if bet 3 is a winner
+       new_money : out unsigned(11 downto 0));  -- balance after adding winning
+   end component;                                       -- bets and subtracting losing bets
+    
+	component binarytobcd
+		port( binIN : in std_logic_vector(11 downto 0);
+			 bcd_out : out unsigned(15 downto 0));
+	end component;
+	 
   signal digit : unsigned(3 downto 0);
   signal balance : unsigned(11 downto 0);
+  
+  signal new_money : unsigned(11 downto 0);
   
   signal bet1_value : unsigned(5 downto 0);
   signal bet2_colour : std_logic;
@@ -70,7 +86,19 @@ ARCHITECTURE structural OF roulette IS
   signal bet3_wins : std_logic;
   signal spin_result : unsigned(5 downto 0);
   signal spin_result_latched : unsigned(5 downto 0) := "000000";
+  signal bet1_amount : unsigned(2 downto 0);
+  signal bet2_amount : unsigned(2 downto 0);
+  signal bet3_amount : unsigned(2 downto 0);
   
+  signal resetb : std_LOGIC;
+  
+  signal ones : std_logic_vector(3 downto 0);
+  signal tens : std_logic_vector(3 downto 0);
+  signal hundreds : std_logic_vector(3 downto 0);
+  signal binIN : std_LOGIC_VECTOR(11 downto 0);
+  
+  signal money_bcd : unsigned(15 downto 0);
+  signal spin_result_bcd : unsigned(15 downto 0);
   
 begin
 
@@ -78,31 +106,65 @@ begin
 		begin
 		if rising_edge(KEY(0)) then
 			spin_result_latched <= spin_result;
-			bet1_value <= SW(8 downto 3);
+			bet1_value <= unsigned(SW(8 downto 3));
+			bet2_colour <= SW(12);
+			bet3_dozen <= unsigned(SW(17 downto 16));
+			
+			bet1_amount <= unsigned(SW(2 downto 0));
+			bet2_amount <= unsigned(SW(11 downto 9));
+			bet3_amount <= unsigned(SW(15 downto 13));
+			
+			balance <= new_money;
+			
+			if(resetb = '0') then
+				bet1_value <= to_unsigned(0, 6);
+				bet2_colour <= '0';
+				bet3_dozen <= "00";
+				
+				bet1_amount <= to_unsigned(0, 3);
+				bet2_amount <= to_unsigned(0, 3);
+				bet3_amount <= to_unsigned(0, 3);
+				
+				balance <= to_unsigned(32, 12);
+				
+			end if;
+			
 		end if;
  		
 	end process;
 	
-	spinwheel0: spinwheel port map(CLOCK_27, KEY(2), spin_result );
+	resetb <= KEY(2);
 	
-	bet1_value <= "110011";
-	bet2_colour <= '1';
-	bet3_dozen <= "01";
-
+	spinwheel0: spinwheel port map(CLOCK_27, resetb, spin_result );
+	
 	win_detect: win port map(spin_result_latched, bet1_value, bet2_colour, bet3_dozen, bet1_wins, bet2_wins, bet3_wins);
+	
+	new_balance_calc: new_balance port map(balance, bet1_amount, bet2_amount, bet3_amount, bet1_wins, bet2_wins, bet3_wins, new_money);
+	
 	LEDG(0) <= bet1_wins;
 	LEDG(1) <= bet2_wins;
 	LEDG(2) <= bet3_wins;
 	
 	
   --Current Balance Displays
-  disp1: digit7seg port map(unsigned(balance(11 downto 8)), HEX2);
-  disp2: digit7seg port map(unsigned(balance(7 downto 4)), HEX1);
-  disp3: digit7seg port map(unsigned(balance(3 downto 0)), HEX0);
+  --disp1: digit7seg port map(unsigned(new_money(11 downto 8)), HEX2);
+  --disp2: digit7seg port map(unsigned(new_money(7 downto 4)), HEX1);
+  --disp3: digit7seg port map(unsigned(new_money(3 downto 0)), HEX0);
+  
+  money_bcd_conv : binarytobcd port map(std_logic_vector(new_money), money_bcd);
+  spin_bcd_conv : binarytobcd port map(std_logic_vector(spin_result_latched), spin_result_bcd);
+  disp1: digit7seg port map(unsigned(ones), HEX0);
+  disp2: digit7seg port map(unsigned(tens), HEX1);
+  disp3: digit7seg port map(unsigned(hundreds), HEX2);
   
   --Spin Result Registers
   disp4: digit7seg port map( "00" & spin_result_latched(5 downto 4), HEX7);
   disp5: digit7seg port map( spin_result_latched(3 downto 0), HEX6);
+  
+  binIN <= std_logic_vector(new_money);
+  
+  
+  
   
 
 END;
