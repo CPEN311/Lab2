@@ -38,31 +38,32 @@ BEGIN
 		variable win_money_2 : unsigned(2 downto 0);
 		variable win_money_3 : unsigned(4 downto 0);
 		variable thirtyfive : integer := 35;
+		variable balance : integer := 0;
+		
 		begin 
-	
+	     
+	     balance := to_integer(money);
+	 
 			if bet1_wins = '1' then
-				win_money_1 := to_unsigned(35, 5)*value1;
-				
+			  balance := balance + 35*to_integer(value1);				
 			else
-		--		win_money_1 := not value1;
+			  balance := balance - to_integer(value1);
 			
 			end if;
 			
 			if bet2_wins = '1' then
-				win_money_2 := value2;
+				balance := balance + to_integer(value2);
 			else
-		--		win_money_2 := not value2;
-				
+			  balance := balance - to_integer(value2);				
 			end if;
 			
 			if bet3_wins = '1' then
-				win_money_3 := to_unsigned(2, 2)*value2;
-				
+				balance := balance + 2*to_integer(value3);				
 			else 
-		--		win_money_3 := not value3;
+			  balance := balance - to_integer(value3);
 			end if;
-		new_money <= money + win_money_1+win_money_2+win_money_3;
-  
+			
+    new_money <= to_unsigned(balance,12);
   end process;
   
 END;
